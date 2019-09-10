@@ -1,0 +1,1 @@
+package fi.haagahelia.bookstore.domain;
