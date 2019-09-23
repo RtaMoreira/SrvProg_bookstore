@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 
 import fi.haagahelia.bookstore.domain.Book;
 import fi.haagahelia.bookstore.domain.BookRepository;
+import fi.haagahelia.bookstore.domain.Category;
+import fi.haagahelia.bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -20,12 +22,17 @@ public class BookstoreApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository catrepository) {
 		return (args) -> {
 			log.info("save a couple of books");
-			repository.save(new Book("Title book", "Rita Moreira", "2019", "BS589-302", 16.90));
-			repository.save(new Book("blablabla", "Bob bob", "2019", "BS589-302", 16.90));
+			catrepository.save(new Category("Thriller"));
+			catrepository.save(new Category("Comedy"));
+			catrepository.save(new Category("Fiction"));
+			catrepository.save(new Category("Romance"));
 
+			repository.save(new Book("Title book", "Rita Moreira", "2019", "BS589-302", 16.90,catrepository.findByName("Thriller").get(0)));
+			repository.save(new Book("blablabla", "Bob bob", "2019", "BS589-302", 16.90,catrepository.findByName("Romance").get(0)));
+			
 			
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
