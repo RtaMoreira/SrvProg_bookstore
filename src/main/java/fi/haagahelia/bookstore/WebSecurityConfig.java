@@ -16,14 +16,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import fi.haagahelia.bookstore.web.UserDetailServiceImpl;
+
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Configuration
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    //@Autowired
-    //private UserDetailsService userDetailsService;	
+    @Autowired
+    private UserDetailsService userDetailsService;	
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,32 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .permitAll();
     }
     
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        List<UserDetails> users = new ArrayList();
-    	UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user")
-                .roles("USER")
-                .build();
-
-    	users.add(user);
-    	
-    	user = User.withDefaultPasswordEncoder()
-                   .username("admin")
-                   .password("admin")
-                   .roles("USER", "ADMIN")
-                   .build();
-    	
-    	users.add(user);
-    	
-        return new InMemoryUserDetailsManager(users);
-    }
-    
- /*   @Autowired
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
-    */
+
+
+    
 }
