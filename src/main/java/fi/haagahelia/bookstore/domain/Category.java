@@ -14,7 +14,7 @@ public class Category {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long categoryid;
+	private Long id;
 	
 	private String name;
 
@@ -36,12 +36,12 @@ public class Category {
 		this.name = name;
 	}
 
-	public Long getCategoryid() {
-		return categoryid;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCategoryid(Long categoryid) {
-		this.categoryid = categoryid;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public List<Book> getBooks() {
