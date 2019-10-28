@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+
+
 import fi.haagahelia.bookstore.domain.Book;
 import fi.haagahelia.bookstore.domain.BookRepository;
 import fi.haagahelia.bookstore.domain.Category;
@@ -36,16 +38,18 @@ public class BookstoreApplication {
 			repository.save(new Book("blablabla", "Bob bob", "2019", "BS589-302", 16.90,catrepository.findByName("Romance").get(0)));
 			
 			
+			// Create users: admin/admin user/user
+			User user1 = new User("user", "$2a$10$pcyvJXKC3KyOBx988OOBB.Zx6qTNCWJoUNWW7rAJQPpOWPz0mo/n2", "USER");
+			User user2 = new User("admin", "$2a$10$qzjN5i5Azvoq8abOZRbVeu63FKFG3uKKjYLNlu7VM5NFWrW1oIAjK", "ADMIN");
+			urepository.save(user1);
+			urepository.save(user2);
+			
+			
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
 				log.info(book.toString());
 			}
-			
-			// Createusers: admin/adminuser/user
-			User user1 =new User("user","$2y$12$LsDn3FX/LwKcqnoKRNF/aOAdc3A.Zaks66mX7S51elCVQxmUoWBKa","USER");
-			User user2 =new User("admin","$2y$12$lTAqSKqYeMiEfv8Djr3mEeuPOxEo6fBKi0wkA7vGZaFOgcrVDDpnO","ADMIN");
-			urepository.save(user1);
-			urepository.save(user2);
+
 
 		};
 	}

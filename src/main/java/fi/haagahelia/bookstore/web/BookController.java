@@ -41,12 +41,14 @@ public class BookController {
     	return repository.findById(bookId);
     }  
     
+    //show all books
 	@RequestMapping(value = "/booklist")
 	public String bookList(Model model) {
 		model.addAttribute("books", repository.findAll());
 		return "booklist";
 	}
 
+	//add new book
 	@RequestMapping(value = "/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
@@ -54,12 +56,14 @@ public class BookController {
 		return "addbook";
 	}
 
+	//save new book
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Book book) {
 		repository.save(book);
 		return "redirect:booklist";
 	}
 	
+	//delete book (admin rights)
     @PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value ="/delete/{id}",method =RequestMethod.GET)
 	public String deleteBook(@PathVariable("id")Long bookId,Model model){
@@ -67,6 +71,7 @@ public class BookController {
 	return"redirect:../booklist";
 	}
 	
+    //Edit book
 	@RequestMapping(value ="/edit/{id}",method =RequestMethod.GET)
 	public String editBook(@PathVariable("id")Long bookId,Model model){
 		model.addAttribute("book", repository.findById(bookId));
